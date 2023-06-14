@@ -56,7 +56,7 @@ def generate_port_traffic_report(port_number):
     """
     # TODO: Complete function body per step 8
     # Get data from records that contain the specified destination port
-    data = log_analysis_lib.filter_log_by_regex(log_path, r'^=(.+ \d+) (.{8}).*SRC(.*?) DST=(.*?) .*SPT(.*?) DPT=(.*?) ')[1]
+    data = log_analysis_lib.filter_log_by_regex(log_path, r'^(.+ \d+) (.{8}).*SRC(.*?) DST=(.*?) .*SPT(.*?) DPT=(.*?) ')[1]
     
     # Generate the CSV report
     df = pd.DataFrame(data)

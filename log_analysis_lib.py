@@ -14,8 +14,10 @@ def main():
     records, caputures = filter_log_by_regex(log_path, r'sshd', print_summary=True, print_records=True)
 
     # TODO: Use filter_log_by_regex() to extract data from the gateway log per Step 6
-    caputures = filter_log_by_regex(log_path, r'SRC=(.*?) DST=(.*?) LEN=(.*?)')[1]
-    
+    caputures = filter_log_by_regex(log_path, r'SRC=(.*?) DST=(.*?) LEN=(.*?) ')[1]
+    df = pd.DataFrame(caputures)
+    df.to_csv('captures.csv', index=False, header=('Sourec IP', 'Destination IP', 'Lenght'))
+
     return
 
 def get_file_path_from_cmd_line(param_num=1):
@@ -36,16 +38,12 @@ def get_file_path_from_cmd_line(param_num=1):
         print("Error:File path not provided.")
         sys.exit()
     
-
-
     file_path = os.path.abspath(sys.argv[param_num])
-
-
 
     if not os.path.isfile(file_path):
         print(f"Error: File '{file_path}' does not exist.")
         sys.exit()
-    return
+    return file_path
 
 def filter_log_by_regex(log_path, regex, ignore_case=True, print_summary=False, print_records=False):
     """Gets a list of records in a log file that match a specified regex.
