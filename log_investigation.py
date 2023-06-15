@@ -72,12 +72,12 @@ def generate_invalid_user_report():
     """
     # TODO: Complete function body per step 9
     # Get data from records that show attempted invalid user login
-    invalid_login_data = log_analysis_lib.filter_log_by_regex(log_path, r'^(.+ \d+) (.{8}).*SRC=(.*?) ')[1]
+    invalid_login_data = log_analysis_lib.filter_log_by_regex(log_path, r'^(.+ \d+) (.{8}): user (\w+).*SRC=(.*?) ')[1]
                                                               
     # Generate the CSV report
     df = pd.DataFrame(invalid_login_data)
     invalid_filename = f"invalid_users.csv"
-    invalid_file_headings = ('Date', 'Time', 'IP Address')
+    invalid_file_headings = ('Date', 'Time', 'Username', 'IP Address')
     df.to_csv(invalid_filename, index=False, header=invalid_file_headings)
     return
 
@@ -90,7 +90,7 @@ def generate_source_ip_log(ip_address):
     """
     # TODO: Complete function body per step 10
     # Get all records that have the specified sourec IP address
-    SRC_IP_add = log_analysis_lib.filter_log_by_regex(log_path, r'^(.+ \d+) (.{8}).*SRC=(.*?) DPT=(.*?) LEN=(.*?) ') [1]
+    SRC_IP_add = log_analysis_lib.filter_log_by_regex(log_path, r'^(.+ \d+) (.{8}).*SRC=(.*?) DPT=(.*?) LEN=(.*?) ')[1]
 
     # Save all records to a plain text .log file
     df = pd.DataFrame(SRC_IP_add)
